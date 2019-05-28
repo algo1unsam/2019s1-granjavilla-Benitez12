@@ -12,10 +12,6 @@ program FarmVille {
 	game.addVisual(hector)
 	
 	
-	
-	
-	
-	
 	keyboard.up().onPressDo { hector.move(hector.position().up(1)) }
 	keyboard.down().onPressDo { hector.move(hector.position().down(1)) }
 	keyboard.left().onPressDo { hector.move(hector.position().left(1)) }
@@ -24,6 +20,9 @@ program FarmVille {
 	keyboard.m().onPressDo {hector.plantar(new Maiz())}
 	keyboard.t().onPressDo {hector.plantar(new Trigo())}
 	keyboard.o().onPressDo {hector.plantar(new Tomaco())}
+	
+	keyboard.r().onPressDo  {hector.regar()}
+	keyboard.c().onPressDo  {hector.cosechar()}
 	
 	
 	
