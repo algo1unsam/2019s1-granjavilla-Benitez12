@@ -1,0 +1,31 @@
+import wollok.game.*
+import hector.*
+import verduras.*
+
+program FarmVille {
+
+	//	CONFIG	
+	game.title("FarmVille")
+	game.height(10)
+	game.width(10)
+	game.ground("ground.png")
+	game.addVisual(hector)
+	
+	
+	
+	
+	
+	
+	keyboard.up().onPressDo { hector.move(hector.position().up(1)) }
+	keyboard.down().onPressDo { hector.move(hector.position().down(1)) }
+	keyboard.left().onPressDo { hector.move(hector.position().left(1)) }
+	keyboard.right().onPressDo { hector.move(hector.position().right(1)) }
+	
+	keyboard.m().onPressDo {hector.plantar(new Maiz())}
+	keyboard.t().onPressDo {hector.plantar(new Trigo())}
+	keyboard.o().onPressDo {hector.plantar(new Tomaco())}
+	
+	
+	
+	game.start()
+}
