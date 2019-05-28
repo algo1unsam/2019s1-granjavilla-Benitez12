@@ -1,5 +1,8 @@
+import wollok.game.*
+
 class Verdura{
-	var property position
+	
+	var property position 
 	
 	method regarse(){
 		
@@ -19,6 +22,7 @@ class Trigo inherits Verdura{
 }
 
 class Tomaco inherits Verdura {
+	
 	
 	
 	method image() = "tomaco.png"
