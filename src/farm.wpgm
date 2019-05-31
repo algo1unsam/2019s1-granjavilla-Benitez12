@@ -1,6 +1,7 @@
 import wollok.game.*
 import hector.*
 import verduras.*
+import mercado.*
 
 program FarmVille {
 
@@ -10,6 +11,9 @@ program FarmVille {
 	game.width(10)
 	game.ground("ground.png")
 	game.addVisual(hector)
+	game.addVisualIn(new Mercado() , game.at(1,9))
+	game.addVisualIn(new Mercado() , game.at(8,9))
+	
 	
 	
 	keyboard.up().onPressDo { hector.move(hector.position().up(1)) }
@@ -22,7 +26,14 @@ program FarmVille {
 	keyboard.o().onPressDo {hector.plantar(new Tomaco())}
 	
 	keyboard.r().onPressDo  {hector.regar()}
+	
 	keyboard.c().onPressDo  {hector.cosechar()}
+	
+	keyboard.space().onPressDo {hector.oroYCantidad()}
+	
+	keyboard.v().onPressDo {hector.vender()}
+	
+
 	
 	
 	

@@ -1,8 +1,16 @@
 import wollok.game.*
 import hector.*
+import mercado.*
 
-
-class Maiz  {
+class Verdura{
+	
+	method cosechar(){
+		
+		game.removeVisual(self)
+	}
+	
+}
+class Maiz inherits Verdura {
 	
 	var property position
 	
@@ -13,31 +21,29 @@ class Maiz  {
 		image = "corn_adult.png"
 	}
 	
-	method adulto(){
+	method listaParaCosechar(){
 		return self.image() == "corn_adult.png"
 	}
 	
-	method cosechar(){
-		if (self.adulto()){
-			game.removeVisual(self)
-		}
-		else{
-			game.say(hector,"Le falta para cosechar")
-		}
-	}
+	method vender(){
+		return 150
+	}	
 	
 }
 
 
-class Trigo {
+class Trigo inherits Verdura{
 	
 	var property position
 	
 	var property etapa = 0
 	
 	method regarse(){
+		
 		etapa++
+		
 	if (etapa > 3){
+		
 		self.reiniciarEtapa()
 	}
 	}
@@ -54,28 +60,31 @@ class Trigo {
 		etapa = 0
 	}
 	
-	method cosechar(){
-		if (etapa >=2){
-			game.removeVisual(self)
+	method vender(){
+		if (etapa == 2){
+			return 100
 		}
-		else{
-			game.say(hector,"Le falta para cosechar")
+		else {
+			return 200
 		}
 	}
+	
+	
 }
 
 
-class Tomaco  {
+class Tomaco inherits Verdura {
 	
 	var property position
 	
-	var property image = "tomaco.png"
+	const property image = "tomaco.png"
 	
 	method regarse(){
 		
 		position = position.up(1)
 		
 		if (self.seFueDelTablero()){
+			
 			self.volverAbajo()
 		}	
 	}
@@ -84,13 +93,19 @@ class Tomaco  {
 		return position.y() == 10
 	}
 	
-	method volverAbajo() = (position = game.at(position.x(),0))
+	method volverAbajo() { position = game.at(position.x(),0)}
 	
-	method cosechar(){
-			game.removeVisual(self)
-	
-		}
+		
+	method listaParaCosechar(){
+		return true 
 	}
+
+	method vender(){
+		
+		return 800
+	}	
+	
+}
 	
 	
 	

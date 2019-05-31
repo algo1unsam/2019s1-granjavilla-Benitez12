@@ -1,12 +1,70 @@
 import wollok.game.*
 import verduras.*
-
+import mercado.*
 
 object hector {
 	
-	var property position =  game.at(1,9)
-	var property imagen = "player.png"
-	var property cosecha  = []
+	var property position =  game.at(1,1)
+	
+	const property imagen = "player.png"
+	
+	const cosecha  = #{}
+	
+	var property oro = 0
+	
+	var property plantasParaVender = 0
+	
+	method cobrar(){
+		
+		oro += self.montoTotalDeLaCosecha()
+	}
+	
+	method tengoPlantasParaVender(){
+		
+		return plantasParaVender > 0
+	}
+	
+	method venderAMercado(){
+		
+		if (self.noEstaSobreAlgo()){
+			
+			errores.noEstoyEnMercado()
+		}
+		else {
+			
+			self.estaSobreAlgo().mercaderia().addAll(cosecha)
+			
+			self.cobrar()
+			
+			cosecha.clear()
+			
+			plantasParaVender = 0
+			
+		}
+		
+	}
+	
+	method vender(){
+	
+		if (self.tengoPlantasParaVender()){
+			
+			self.venderAMercado()
+			
+		}
+		else {	
+			
+			game.say(self,errores.nadaParaVender())
+	
+			
+		}
+		
+		
+	}
+	
+	method montoTotalDeLaCosecha(){
+		
+		return cosecha.asList().sum {planta => planta.vender() }
+	}
 	
 	method image(){
 		
@@ -18,16 +76,28 @@ object hector {
 		self.position(nuevaPosicion)	
 	}
 	
+	method oroYCantidad(){
+		
+		game.say(self,"Tengo " + self.oro() + " de oro y " + self.plantasParaVender() +" plantas para vender." )
+	}
+	
 	method plantar(verdura){
 		
 		if(self.noEstaSobreAlgo()){
+			
 			verdura.position(self.position())
+			
 			game.addVisual(verdura)
 			
 			}
 		else {
-			game.say(self,"Ya hay un cultivo aca")
+			game.say(self,errores.yaHayCultivo())
 		}
+	}
+	
+	method cantidadDePlantas(){
+		
+		return cosecha.size()
 	}
 	
 	method regar(){
@@ -38,7 +108,7 @@ object hector {
 	}
 		else {
 			
-			game.say(self,"No hay nada que regar")
+			game.say(self,errores.noHayQueRegar())
 		}
 	}
 	
@@ -54,21 +124,58 @@ object hector {
 		
 	}
 	
+	method sePuedeCosechar(){
+	
+		return self.estaSobreAlgo().listaParaCosechar()
+	}
 
 	method cosechar(){
 		
-		if (not self.noEstaSobreAlgo()){
+		if (self.noEstaSobreAlgo()){
+			
+			game.say(self,errores.noHayQueCosechar())
+			
+		
+	}
+		else if (not self.noEstaSobreAlgo() and self.sePuedeCosechar() ){
 			
 			cosecha.add(self.estaSobreAlgo())
 			
 			self.estaSobreAlgo().cosechar()
 			
-			
-	}
+			plantasParaVender++
+			}
 		else {
 			
-			game.say(self,"No hay nada que cosechar")
+			game.say(self,errores.faltaCosecha())
 		}
+	
 	}
 	
+
+
+}
+
+object errores{
+	
+	method faltaCosecha(){
+		return "Le falta para cosechar."
+	}
+	
+	method noHayQueCosechar(){
+		return "No hay nada que cosechar."
+	}
+	
+	method noHayQueRegar(){
+		return "No hay nada que regar."
+	}
+	method yaHayCultivo(){
+		return "Ya hay un cultivo aca."
+	}
+	method nadaParaVender(){
+		return "No tengo nada para vender."
+	}
+	method noEstoyEnMercado(){
+		return "No estoy en un mercado."
+	}
 }
