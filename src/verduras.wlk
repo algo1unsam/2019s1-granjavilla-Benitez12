@@ -8,7 +8,11 @@ class Verdura{
 		
 		game.removeVisual(self)
 	}
-	
+
+	method queSoy(){
+		
+		game.say(self,"NO SOY UN MERCADO!")
+	}
 }
 class Maiz inherits Verdura {
 	
@@ -27,7 +31,8 @@ class Maiz inherits Verdura {
 	
 	method vender(){
 		return 150
-	}	
+	}
+
 	
 }
 

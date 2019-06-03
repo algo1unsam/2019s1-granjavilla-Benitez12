@@ -11,8 +11,9 @@ program FarmVille {
 	game.width(10)
 	game.ground("ground.png")
 	game.addVisual(hector)
-	game.addVisualIn(new Mercado() , game.at(1,9))
-	game.addVisualIn(new Mercado() , game.at(8,9))
+	game.addVisual(new Mercado(cantidadDeMonedas = 100000,position = game.at(8,8))) 
+	game.addVisual(new Mercado(cantidadDeMonedas = 1000,position = game.at(1,8))) 
+	game.addVisual(new Mercado(cantidadDeMonedas = 0,position = game.at(4,8)))
 	
 	
 	

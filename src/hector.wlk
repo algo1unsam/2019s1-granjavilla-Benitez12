@@ -8,7 +8,7 @@ object hector {
 	
 	const property imagen = "player.png"
 	
-	const cosecha  = #{}
+	const property cosecha  = #{}
 	
 	var property oro = 0
 	
@@ -18,7 +18,10 @@ object hector {
 		
 		oro += self.montoTotalDeLaCosecha()
 	}
-	
+	method reiniciarCosecha(){
+		
+		plantasParaVender = 0
+	}
 	method tengoPlantasParaVender(){
 		
 		return plantasParaVender > 0
@@ -30,20 +33,24 @@ object hector {
 			
 			errores.noEstoyEnMercado()
 		}
+		
 		else {
 			
-			self.estaSobreAlgo().mercaderia().addAll(cosecha)
+			self.estaSobreAlgo().queSoy()
 			
-			self.cobrar()
+			/*self.estaSobreAlgo().mercaderia().addAll(cosecha)
+			
+			self.estaSobreAlgo().pagar()
 			
 			cosecha.clear()
 			
-			plantasParaVender = 0
+			plantasParaVender = 0*/
 			
 		}
 		
+		
 	}
-	
+		
 	method vender(){
 	
 		if (self.tengoPlantasParaVender()){
@@ -177,5 +184,8 @@ object errores{
 	}
 	method noEstoyEnMercado(){
 		return "No estoy en un mercado."
+	}
+	method noTengoDinero(){
+		return "No tengo dinero para comprar la cosecha."
 	}
 }
